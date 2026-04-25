@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nilai Ijazah 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:w-weight@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
@@ -35,16 +35,26 @@
         .error-screen .err-detail{font-size:11px;color:var(--fg-muted);opacity:.5;max-width:340px;word-break:break-all;text-align:center}
         .error-screen .retry-btn{margin-top:8px;padding:10px 28px;background:var(--ipa-grad);border:none;border-radius:var(--radius-sm);color:#0c0e14;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s,box-shadow .2s}
         .error-screen .retry-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,168,67,.3)}
+
+        /* === Header & Logo === */
         .hdr{text-align:center;padding:28px 0 20px;animation:fadeUp .6s ease-out both}
         .logo-wrap{position:relative;display:inline-block;margin-bottom:16px}
-        .logo-ring{width:90px;height:90px;border-radius:50%;background:var(--ipa-grad);padding:3px;animation:logoP 3s ease-in-out infinite;position:relative}
+        .logo-ring{
+            width:96px;height:96px;border-radius:50%;background:var(--ipa-grad);padding:3px;
+            animation:logoP 3s ease-in-out infinite;position:relative;
+        }
         .logo-ring::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(212,168,67,.18);animation:rRot 22s linear infinite}
         .logo-ring::after{content:'';position:absolute;inset:-13px;border-radius:50%;border:1px dashed rgba(212,168,67,.08);animation:rRot 34s linear infinite reverse}
         @keyframes rRot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
         @keyframes logoP{0%,100%{box-shadow:0 0 18px rgba(212,168,67,.18)}50%{box-shadow:0 0 36px rgba(212,168,67,.32)}}
-        .logo-in{width:100%;height:100%;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
-        .logo-in i{font-size:28px;color:var(--accent)}
-        .logo-in span{font-size:6.5px;font-weight:700;color:var(--accent);letter-spacing:1.2px;text-transform:uppercase}
+        .logo-in{
+            width:100%;height:100%;border-radius:50%;background:var(--bg);
+            display:flex;align-items:center;justify-content:center;overflow:hidden;
+        }
+        .logo-in img{
+            width:100%;height:100%;object-fit:cover;border-radius:50%;
+            display:block;
+        }
         .sch-name{font-size:11px;font-weight:500;color:var(--fg-muted);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
         .hdr-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;line-height:1.1;margin-bottom:4px}
         .hdr-title .hl{background:var(--ipa-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
@@ -53,6 +63,7 @@
         .update-info{display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;color:var(--fg-muted);opacity:.5;margin-top:10px}
         .update-info .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:blink 2s ease-in-out infinite}
         @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
         .search-sec{margin-bottom:18px;animation:fadeUp .6s ease-out .15s both}
         .search-box{position:relative}
         .search-box input{width:100%;padding:13px 14px 13px 42px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:all .3s}
@@ -148,8 +159,7 @@
         <div class="logo-wrap">
             <div class="logo-ring">
                 <div class="logo-in">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>MTs Negeri</span>
+                    <img src="./logo.png" alt="Logo MTs Negeri 1 Tasikmalaya">
                 </div>
             </div>
         </div>
@@ -190,15 +200,10 @@
 
 <div class="toast" id="toast"></div>
 
-<script>
-/* =============================================
-   PATH FILE CSV
-   Pastikan file ini ada di root repo GitHub
-   ============================================= */
+<script{
 var PATH_IPA = "./ipa.csv";
 var PATH_IPS = "./ips.csv";
 
-/* === Nama mapel singkat untuk tampilan === */
 var MAP_SHORT = {
     "Al-Qur'an Hadis":"Al-Qur'an Hadis",
     "Akidah Akhlak":"Akidah Akhlak",
@@ -228,20 +233,17 @@ var MAP_SHORT = {
     "Biologi (LM)":"Biologi (LM)"
 };
 
-/* === Kelompok mapel === */
 var KEAGAMAAN = ["Al-Qur'an Hadis","Akidah Akhlak","Fikih","Sejarah Kebudayaan Islam"];
 var UMUM = ["Pendidikan Pancasila dan Kewarganegaraan","Bahasa Indonesia","Bahasa Arab","Matematika","Sejarah Indonesia","Bahasa Inggris"];
 var KETERAMPILAN = ["Seni Budaya","Pendidikan Jasmani, Olahraga, dan Kesehatan","Prakarya dan Kewirausahaan","Bahasa dan Sastra Sunda","Sejarah Perjuangan Syarikat Islam"];
 var PEMINATAN_IPA = ["Matematika (P)","Biologi","Fisika","Kimia","Bahasa Jepang","Ekonomi (LM)"];
 var PEMINATAN_IPS = ["Geografi","Sejarah","Sosiologi","Ekonomi","Bahasa Jepang","Biologi (LM)"];
 
-/* === State === */
 var allData = [];
 var filterAktif = "semua";
 var searchQuery = "";
 var sortDesc = true;
 
-/* === Utilitas === */
 function rataRata(nilai){
     var v=Object.values(nilai);
     return v.length>0?v.reduce(function(a,b){return a+b},0)/v.length:0;
@@ -254,10 +256,6 @@ function predikatInfo(r){
 }
 function inisial(nama){return nama.split(" ").slice(0,2).map(function(w){return w[0]}).join("").toUpperCase();}
 
-/* =============================================
-   BACA CSV — MENANGANI DELIMITER TITIK KOMA (;)
-   Excel Indonesia memakai ; bukan , sebagai pemisah
-   ============================================= */
 function parseCSVFile(path){
     return fetch(path)
         .then(function(res){
@@ -265,21 +263,11 @@ function parseCSVFile(path){
             return res.text();
         })
         .then(function(text){
-            // 1. Hapus BOM UTF-8 jika ada (Excel sering menambahkan ini)
             var clean = text.replace(/^\uFEFF/,"");
-
-            // 2. Deteksi delimiter secara otomatis
-            // Ambil baris pertama yang berisi header
             var lines = clean.split(/\r?\n/);
             var firstLine = lines[0] || "";
-
-            // Hitung jumlah titik koma vs koma
             var sc = (firstLine.match(/;/g)||[]).length;
             var cm = (firstLine.match(/,/g)||[]).length;
-
-            // Jika titik koma lebih banyak → delimiter = titik koma
-            // Jika koma lebih banyak → delimiter = koma
-            // Jika sama → coba lihat apakah baris kedua juga punya titik koma
             var delimiter = ",";
             if(sc > cm){
                 delimiter = ";";
@@ -289,25 +277,18 @@ function parseCSVFile(path){
                     delimiter = ";";
                 }
             }
-
-            // 3. Parse dengan SheetJS menggunakan delimiter yang terdeteksi
             var wb = XLSX.read(clean, {type:"string", FS:delimiter, raw:false});
             var ws = wb.Sheets[wb.SheetNames[0]];
             var rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:""});
-
             if(rows.length < 2) throw new Error("File "+path+" tidak memiliki data baris");
-
-            // 4. Baris pertama = header, kolom 0 = HEAD, kolom 1 = Nama, kolom 2+ = mapel
             var headers = rows[0];
             var mapelNames = headers.slice(2);
-
             var result = [];
             for(var i=1; i<rows.length; i++){
                 var row = rows[i];
                 if(!row || row.length < 2) continue;
                 var nama = String(row[1]||"").trim();
                 if(!nama) continue;
-
                 var nilai = {};
                 for(var j=0; j<mapelNames.length; j++){
                     var mk = String(mapelNames[j]).trim();
@@ -318,13 +299,11 @@ function parseCSVFile(path){
                 }
                 result.push({nama:nama, nilai:nilai});
             }
-
             if(result.length === 0) throw new Error("File "+path+" tidak memiliki data siswa (delimiter: "+delimiter+")");
             return result;
         });
 }
 
-/* === Bangun grup mapel dinamis === */
 function buildGroups(nilai, kelas){
     var peminatan = kelas==="IPA" ? PEMINATAN_IPA : PEMINATAN_IPS;
     var groups=[
@@ -338,7 +317,6 @@ function buildGroups(nilai, kelas){
     }).filter(function(g){return g.keys.length>0});
 }
 
-/* === Partikel === */
 function initPtcls(){
     var c=document.getElementById("ptcls");
     for(var i=0;i<18;i++){
@@ -353,7 +331,6 @@ function initPtcls(){
     }
 }
 
-/* === Render statistik === */
 function renderStats(data){
     var n=data.length;
     var ipaC=0,ipsC=0,totalR=0;
@@ -368,7 +345,6 @@ function renderStats(data){
         '<div class="st"><div class="st-v b">'+ipaC+'/'+ipsC+'</div><div class="st-l">IPA / IPS</div></div>';
 }
 
-/* === Render grup nilai === */
 function renderNilaiGroup(nilai, kelas){
     var groups=buildGroups(nilai, kelas);
     var html="";
@@ -389,7 +365,6 @@ function renderNilaiGroup(nilai, kelas){
     return html;
 }
 
-/* === Render daftar utama === */
 function render(){
     var data=allData.slice();
     if(filterAktif!=="semua") data=data.filter(function(s){return s.kelas===filterAktif});
@@ -401,16 +376,13 @@ function render(){
         var ra=rataRata(a.nilai),rb=rataRata(b.nilai);
         return sortDesc?rb-ra:ra-rb;
     });
-
     document.getElementById("countLabel").textContent=data.length;
     renderStats(data);
-
     var list=document.getElementById("sList");
     if(data.length===0){
         list.innerHTML='<div class="empty"><i class="fas fa-search"></i><p>Tidak ada siswa ditemukan</p></div>';
         return;
     }
-
     var html="";
     for(var i=0;i<data.length;i++){
         var s=data[i];
@@ -446,20 +418,17 @@ function render(){
     list.innerHTML=html;
 }
 
-/* === Toggle kartu === */
 function toggle(hdr){
     var card=hdr.closest(".scard");
     var det=card.querySelector(".sc-det");
     var tog=hdr.querySelector(".sc-tog");
     var isOpen=det.classList.contains("open");
-
     var allOpen=document.querySelectorAll(".sc-det.open");
     for(var i=0;i<allOpen.length;i++){
         allOpen[i].classList.remove("open");
         allOpen[i].closest(".scard").querySelector(".sc-tog").classList.remove("open");
         allOpen[i].closest(".scard").querySelector(".sc-hdr").setAttribute("aria-expanded","false");
     }
-
     if(!isOpen){
         det.classList.add("open");
         tog.classList.add("open");
@@ -473,7 +442,6 @@ function toggle(hdr){
     }
 }
 
-/* === Tab filter === */
 var tabBtns=document.querySelectorAll(".tab");
 for(var t=0;t<tabBtns.length;t++){
     tabBtns[t].addEventListener("click",function(){
@@ -490,7 +458,6 @@ for(var t=0;t<tabBtns.length;t++){
     });
 }
 
-/* === Pencarian === */
 var srcIn=document.getElementById("srcIn");
 var srcTm;
 srcIn.addEventListener("input",function(){
@@ -499,7 +466,6 @@ srcIn.addEventListener("input",function(){
     srcTm=setTimeout(function(){searchQuery=self.value;render()},200);
 });
 
-/* === Sort === */
 document.getElementById("sortBtn").addEventListener("click",function(){
     sortDesc=!sortDesc;
     document.querySelector("#sortBtn i").className=sortDesc?"fas fa-arrow-down-short-wide":"fas fa-arrow-up-short-wide";
@@ -507,41 +473,34 @@ document.getElementById("sortBtn").addEventListener("click",function(){
     showToast(sortDesc?"Urutan: Tertinggi ke Terendah":"Urutan: Terendah ke Tertinggi");
 });
 
-/* === Keyboard === */
 document.addEventListener("keydown",function(e){
     if((e.key==="Enter"||e.key===" ")&&document.activeElement.classList.contains("sc-hdr")){
         e.preventDefault();toggle(document.activeElement);
     }
 });
 
-/* === Toast === */
 function showToast(msg){
     var t=document.getElementById("toast");
     t.textContent=msg;t.classList.add("show");
     setTimeout(function(){t.classList.remove("show")},1800);
 }
 
-/* === MUAT DATA === */
 async function loadData(){
     try{
         var results=await Promise.all([parseCSVFile(PATH_IPA), parseCSVFile(PATH_IPS)]);
         var ipaData=results[0];
         var ipsData=results[1];
-
         allData=[];
         for(var i=0;i<ipaData.length;i++) allData.push({nama:ipaData[i].nama,nilai:ipaData[i].nilai,kelas:"IPA"});
         for(var i=0;i<ipsData.length;i++) allData.push({nama:ipsData[i].nama,nilai:ipsData[i].nilai,kelas:"IPS"});
-
         document.getElementById("loader").classList.add("hide");
         document.getElementById("mainContent").style.display="";
-
         var now=new Date();
         var jam=String(now.getHours()).padStart(2,"0");
         var menit=String(now.getMinutes()).padStart(2,"0");
         var tgl=now.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
         document.getElementById("lastUpdate").textContent=
             ipaData.length+" siswa IPA, "+ipsData.length+" siswa IPS \u00b7 "+tgl+" "+jam+":"+menit;
-
         render();
     }catch(err){
         console.error("Gagal memuat data:",err);
@@ -553,7 +512,6 @@ async function loadData(){
     }
 }
 
-/* === Init === */
 initPtcls();
 loadData();
 </script>
