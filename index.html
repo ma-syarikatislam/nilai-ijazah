@@ -6,7 +6,6 @@
     <title>Nilai Ijazah 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <!-- SheetJS untuk baca file Excel di browser -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         :root {
@@ -49,7 +48,6 @@
 
         .wrap{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:0 18px 40px;}
 
-        /* Loading */
         .loader-screen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s,visibility .5s;}
         .loader-screen.hide{opacity:0;visibility:hidden;}
         .loader-ring{width:52px;height:52px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
@@ -57,12 +55,12 @@
         .loader-text{font-size:13px;color:var(--fg-muted);letter-spacing:.5px;}
         .loader-sub{font-size:11px;color:var(--fg-muted);opacity:.6;max-width:260px;text-align:center;line-height:1.5;}
 
-        /* Error state */
         .error-screen{position:fixed;inset:0;z-index:998;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px;text-align:center;}
         .error-screen.show{display:flex;}
         .error-screen i{font-size:44px;color:var(--danger);opacity:.6;}
         .error-screen h2{font-size:18px;color:var(--fg);font-weight:600;}
         .error-screen p{font-size:13px;color:var(--fg-muted);line-height:1.6;max-width:320px;}
+        .error-screen .err-detail{font-size:11px;color:var(--fg-muted);opacity:.5;max-width:340px;word-break:break-all;text-align:center;}
         .error-screen .retry-btn{
             margin-top:8px;padding:10px 28px;background:var(--ipa-grad);border:none;border-radius:var(--radius-sm);
             color:#0c0e14;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;
@@ -70,7 +68,6 @@
         }
         .error-screen .retry-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,168,67,.3);}
 
-        /* Header */
         .hdr{text-align:center;padding:28px 0 20px;animation:fadeUp .6s ease-out both;}
         .logo-wrap{position:relative;display:inline-block;margin-bottom:16px;}
         .logo-ring{
@@ -90,7 +87,6 @@
         .hdr-sub{font-size:12px;color:var(--fg-muted);font-weight:400;}
         .hdr-line{width:46px;height:2px;background:var(--ipa-grad);margin:16px auto 0;border-radius:2px;}
 
-        /* Update info */
         .update-info{
             display:flex;align-items:center;justify-content:center;gap:6px;
             font-size:10px;color:var(--fg-muted);opacity:.5;margin-top:10px;
@@ -98,7 +94,6 @@
         .update-info .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:blink 2s ease-in-out infinite;}
         @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
 
-        /* Search */
         .search-sec{margin-bottom:18px;animation:fadeUp .6s ease-out .15s both;}
         .search-box{position:relative;}
         .search-box input{
@@ -110,7 +105,6 @@
         .search-box .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--fg-muted);font-size:13px;transition:color .3s;}
         .search-box input:focus~.ico{color:var(--accent);}
 
-        /* Tabs */
         .tabs{display:flex;gap:7px;margin-bottom:16px;animation:fadeUp .6s ease-out .25s both;}
         .tab{
             flex:1;padding:11px 6px;border:1px solid var(--border);border-radius:var(--radius-sm);
@@ -122,14 +116,12 @@
         .tab:not(.on-gold):not(.on-blue):hover{border-color:rgba(212,168,67,.25);color:var(--fg);}
         .tab i{font-size:11px;}
 
-        /* Stats */
         .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px;animation:fadeUp .6s ease-out .3s both;}
         .st{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px;text-align:center;}
         .st-v{font-size:18px;font-weight:700;margin-bottom:1px;}
         .st-v.g{color:var(--accent);}.st-v.gr{color:var(--success);}.st-v.b{color:#43a8d4;}
         .st-l{font-size:9px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.5px;}
 
-        /* Sort row */
         .sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;animation:fadeUp .6s ease-out .33s both;}
         .sort-label{font-size:11px;color:var(--fg-muted);}
         .sort-label strong{color:var(--fg);font-weight:600;}
@@ -140,7 +132,6 @@
         }
         .sort-btn:hover{color:var(--accent);border-color:rgba(212,168,67,.3);}
 
-        /* Cards */
         .slist{display:flex;flex-direction:column;gap:10px;}
         .scard{
             background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
@@ -221,22 +212,20 @@
 <div class="atmos"><div class="orb orb-1"></div><div class="orb orb-2"></div><div class="orb orb-3"></div></div>
 <div class="particles" id="ptcls"></div>
 
-<!-- Loading -->
 <div class="loader-screen" id="loader">
     <div class="loader-ring"></div>
     <div class="loader-text">Memuat data nilai...</div>
-    <div class="loader-sub">Membaca file ipa.xlsx dan ips.xlsx</div>
+    <div class="loader-sub">Membaca file ipa.csv dan ips.csv</div>
 </div>
 
-<!-- Error -->
 <div class="error-screen" id="errorScreen">
     <i class="fas fa-exclamation-triangle"></i>
     <h2>Gagal Memuat Data</h2>
-    <p id="errorMsg">Pastikan file ipa.xlsx dan ips.xlsx berada di folder yang sama dengan file index.html</p>
+    <p id="errorMsg">Terjadi kesalahan saat memuat data.</p>
+    <p class="err-detail" id="errDetail"></p>
     <button class="retry-btn" onclick="location.reload()"><i class="fas fa-redo"></i>&nbsp; Coba Lagi</button>
 </div>
 
-<!-- Konten -->
 <div class="wrap" id="mainContent" style="display:none;">
     <header class="hdr">
         <div class="logo-wrap">
@@ -253,7 +242,7 @@
         <div class="hdr-line"></div>
         <div class="update-info">
             <span class="dot"></span>
-            <span id="lastUpdate">Data dimuat dari Excel</span>
+            <span id="lastUpdate">Data dimuat dari CSV</span>
         </div>
     </header>
 
@@ -285,12 +274,14 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// === Konfigurasi path file Excel ===
-// Sesuaikan path ini jika file Excel diletakkan di folder tertentu
-const PATH_IPA = "./ipa.xlsx";
-const PATH_IPS = "./ips.xlsx";
+/* ============================================
+   KONFIGURASI PATH FILE CSV
+   Pastikan file ini ada di root repo GitHub
+   ============================================ */
+const PATH_IPA = "./ipa.csv";
+const PATH_IPS = "./ips.csv";
 
-// === Nama mapel singkat untuk tampilan ===
+// === Nama mapel singkat ===
 const MAP_SHORT = {
     "Al-Qur'an Hadis": "Al-Qur'an Hadis",
     "Akidah Akhlak": "Akidah Akhlak",
@@ -320,7 +311,7 @@ const MAP_SHORT = {
     "Biologi (LM)": "Biologi (LM)"
 };
 
-// === Kelompok mapel IPA ===
+// === Kelompok mapel per kelas ===
 const KEAGAMAAN = ["Al-Qur'an Hadis","Akidah Akhlak","Fikih","Sejarah Kebudayaan Islam"];
 const UMUM = ["Pendidikan Pancasila dan Kewarganegaraan","Bahasa Indonesia","Bahasa Arab","Matematika","Sejarah Indonesia","Bahasa Inggris"];
 const KETERAMPILAN = ["Seni Budaya","Pendidikan Jasmani, Olahraga, dan Kesehatan","Prakarya dan Kewirausahaan","Bahasa dan Sastra Sunda","Sejarah Perjuangan Syarikat Islam"];
@@ -336,7 +327,7 @@ let sortDesc = true;
 // === Utilitas ===
 function rataRata(nilai) {
     const v = Object.values(nilai);
-    return v.reduce((a, b) => a + b, 0) / v.length;
+    return v.length > 0 ? v.reduce((a, b) => a + b, 0) / v.length : 0;
 }
 function katNilai(n) { return n >= 85 ? "h" : n >= 70 ? "m" : "l"; }
 function predikatInfo(r) {
@@ -346,59 +337,64 @@ function predikatInfo(r) {
 }
 function inisial(nama) { return nama.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase(); }
 
-// === Baca file Excel dan ubah jadi array objek ===
-function parseExcelFile(path) {
+// === Baca file CSV dengan SheetJS ===
+function parseCSVFile(path) {
     return fetch(path)
         .then(res => {
             if (!res.ok) throw new Error("File " + path + " tidak ditemukan (HTTP " + res.status + ")");
-            return res.arrayBuffer();
+            return res.text();
         })
-        .then(buf => {
-            const wb = XLSX.read(buf, { type: "array" });
+        .then(text => {
+            // Gunakan SheetJS untuk parse CSV (menangani koma di dalam tanda kutip, dll)
+            const wb = XLSX.read(text, { type: "string" });
             const ws = wb.Sheets[wb.SheetNames[0]];
             const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
 
-            if (rows.length < 2) throw new Error("File " + path + " kosong atau tidak memiliki data");
+            if (rows.length < 2) throw new Error("File " + path + " tidak memiliki data baris");
 
             // Baris pertama = header, kolom 0 = HEAD, kolom 1 = Nama, kolom 2+ = mapel
             const headers = rows[0];
-            const mapelNames = headers.slice(2); // nama-nama mapel
+            const mapelNames = headers.slice(2);
 
             const result = [];
             for (let i = 1; i < rows.length; i++) {
                 const row = rows[i];
+                if (!row || row.length < 2) continue;
                 const nama = String(row[1] || "").trim();
-                if (!nama) continue; // skip baris kosong
+                if (!nama) continue;
 
                 const nilai = {};
                 for (let j = 0; j < mapelNames.length; j++) {
                     const mk = String(mapelNames[j]).trim();
                     if (!mk) continue;
-                    const val = parseFloat(row[j + 2]);
+                    const raw = row[j + 2];
+                    const val = parseFloat(raw);
                     nilai[mk] = isNaN(val) ? 0 : val;
                 }
                 result.push({ nama, nilai });
             }
+
+            if (result.length === 0) throw new Error("File " + path + " tidak memiliki data siswa");
             return result;
         });
 }
 
-// === Bangun grup mapel secara dinamis ===
+// === Bangun grup mapel dinamis ===
 function buildGroups(nilai, kelas) {
+    const peminatan = kelas === "IPA" ? PEMINATAN_IPA : PEMINATAN_IPS;
     const groups = [
         { label: "Keagamaan", keys: KEAGAMAAN },
         { label: "Umum", keys: UMUM },
         { label: "Keterampilan", keys: KETERAMPILAN },
-        { label: "Peminatan " + kelas, keys: kelas === "IPA" ? PEMINATAN_IPA : PEMINATAN_IPS }
+        { label: "Peminatan " + kelas, keys: peminatan }
     ];
-    // Hanya sertakan mapel yang benar-benar ada di data siswa ini
     return groups.map(g => ({
         label: g.label,
         keys: g.keys.filter(k => nilai[k] !== undefined)
     })).filter(g => g.keys.length > 0);
 }
 
-// === Partikel ===
+// === Partikel latar ===
 function initPtcls() {
     const c = document.getElementById("ptcls");
     for (let i = 0; i < 18; i++) {
@@ -421,11 +417,10 @@ function renderStats(data) {
     let totalR = 0;
     data.forEach(s => { totalR += rataRata(s.nilai); });
     const avg = n > 0 ? (totalR / n).toFixed(1) : "0";
-    document.getElementById("statsRow").innerHTML = `
-        <div class="st"><div class="st-v g">${n}</div><div class="st-l">Total Siswa</div></div>
-        <div class="st"><div class="st-v gr">${avg}</div><div class="st-l">Rata-rata</div></div>
-        <div class="st"><div class="st-v b">${ipaC}/${ipsC}</div><div class="st-l">IPA / IPS</div></div>
-    `;
+    document.getElementById("statsRow").innerHTML =
+        '<div class="st"><div class="st-v g">' + n + '</div><div class="st-l">Total Siswa</div></div>' +
+        '<div class="st"><div class="st-v gr">' + avg + '</div><div class="st-l">Rata-rata</div></div>' +
+        '<div class="st"><div class="st-v b">' + ipaC + '/' + ipsC + '</div><div class="st-l">IPA / IPS</div></div>';
 }
 
 // === Render grup nilai ===
@@ -433,17 +428,17 @@ function renderNilaiGroup(nilai, kelas) {
     const groups = buildGroups(nilai, kelas);
     let html = "";
     groups.forEach(g => {
-        html += `<div class="subj-group-title">${g.label}</div><div class="ngr">`;
+        html += '<div class="subj-group-title">' + g.label + '</div><div class="ngr">';
         g.keys.forEach(mk => {
             const n = nilai[mk];
             const c = katNilai(n);
-            html += `<div class="ni">
-                <span class="ni-mk">${MAP_SHORT[mk] || mk}</span>
-                <span class="ni-val ${c}">${n}</span>
-                <div class="ni-bar"><div class="ni-bar-f ${c}" data-w="${n}"></div></div>
-            </div>`;
+            html += '<div class="ni">' +
+                '<span class="ni-mk">' + (MAP_SHORT[mk] || mk) + '</span>' +
+                '<span class="ni-val ' + c + '">' + n + '</span>' +
+                '<div class="ni-bar"><div class="ni-bar-f ' + c + '" data-w="' + n + '"></div></div>' +
+                '</div>';
         });
-        html += "</div>";
+        html += '</div>';
     });
     return html;
 }
@@ -466,7 +461,7 @@ function render() {
 
     const list = document.getElementById("sList");
     if (data.length === 0) {
-        list.innerHTML = `<div class="empty"><i class="fas fa-search"></i><p>Tidak ada siswa ditemukan</p></div>`;
+        list.innerHTML = '<div class="empty"><i class="fas fa-search"></i><p>Tidak ada siswa ditemukan</p></div>';
         return;
     }
 
@@ -475,31 +470,31 @@ function render() {
         const rFix = r.toFixed(1);
         const pr = predikatInfo(r);
         const kls = s.kelas.toLowerCase();
-        return `<article class="scard" style="animation-delay:${i * 0.04}s">
-            <div class="sc-hdr" onclick="toggle(this)" role="button" tabindex="0" aria-expanded="false">
-                <div class="sc-avatar ${kls}">${inisial(s.nama)}</div>
-                <div class="sc-info">
-                    <div class="sc-name">${s.nama}</div>
-                    <div class="sc-no">${s.kelas} &middot; Rata-rata ${rFix}</div>
-                </div>
-                <span class="sc-badge b-${kls}">${s.kelas}</span>
-                <span class="sc-tog"><i class="fas fa-chevron-down"></i></span>
-            </div>
-            <div class="sc-det">
-                <div class="sc-det-in">
-                    <div class="det-div"></div>
-                    ${renderNilaiGroup(s.nilai, s.kelas)}
-                    <div class="tot">
-                        <span class="tot-lbl">Rata-rata</span>
-                        <div style="display:flex;align-items:center;">
-                            <span class="tot-val">${rFix}</span>
-                            <span class="tot-prd ${pr.cls}">${pr.label}</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </article>`;
-    }).join("");
+        return '<article class="scard" style="animation-delay:' + (i * 0.04) + 's">' +
+            '<div class="sc-hdr" onclick="toggle(this)" role="button" tabindex="0" aria-expanded="false">' +
+                '<div class="sc-avatar ' + kls + '">' + inisial(s.nama) + '</div>' +
+                '<div class="sc-info">' +
+                    '<div class="sc-name">' + s.nama + '</div>' +
+                    '<div class="sc-no">' + s.kelas + ' &middot; Rata-rata ' + rFix + '</div>' +
+                '</div>' +
+                '<span class="sc-badge b-' + kls + '">' + s.kelas + '</span>' +
+                '<span class="sc-tog"><i class="fas fa-chevron-down"></i></span>' +
+            '</div>' +
+            '<div class="sc-det">' +
+                '<div class="sc-det-in">' +
+                    '<div class="det-div"></div>' +
+                    renderNilaiGroup(s.nilai, s.kelas) +
+                    '<div class="tot">' +
+                        '<span class="tot-lbl">Rata-rata</span>' +
+                        '<div style="display:flex;align-items:center;">' +
+                            '<span class="tot-val">' + rFix + '</span>' +
+                            '<span class="tot-prd ' + pr.cls + '">' + pr.label + '</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+        '</article>';
+    }).join('');
 }
 
 // === Toggle kartu ===
@@ -508,11 +503,14 @@ function toggle(hdr) {
     const det = card.querySelector(".sc-det");
     const tog = hdr.querySelector(".sc-tog");
     const isOpen = det.classList.contains("open");
+
+    // Tutup semua dulu
     document.querySelectorAll(".sc-det.open").forEach(d => {
         d.classList.remove("open");
         d.closest(".scard").querySelector(".sc-tog").classList.remove("open");
         d.closest(".scard").querySelector(".sc-hdr").setAttribute("aria-expanded", "false");
     });
+
     if (!isOpen) {
         det.classList.add("open");
         tog.classList.add("open");
@@ -554,50 +552,54 @@ document.getElementById("sortBtn").addEventListener("click", () => {
     showToast(sortDesc ? "Urutan: Tertinggi ke Terendah" : "Urutan: Terendah ke Tertinggi");
 });
 
-// === Keyboard ===
+// === Keyboard support ===
 document.addEventListener("keydown", e => {
     if ((e.key === "Enter" || e.key === " ") && document.activeElement.classList.contains("sc-hdr")) {
-        e.preventDefault(); toggle(document.activeElement);
+        e.preventDefault();
+        toggle(document.activeElement);
     }
 });
 
 // === Toast ===
 function showToast(msg) {
     const t = document.getElementById("toast");
-    t.textContent = msg; t.classList.add("show");
+    t.textContent = msg;
+    t.classList.add("show");
     setTimeout(() => t.classList.remove("show"), 1800);
 }
 
-// === Muat data dari Excel ===
+// === MUAT DATA DARI CSV ===
 async function loadData() {
     try {
         const [ipaData, ipsData] = await Promise.all([
-            parseExcelFile(PATH_IPA),
-            parseExcelFile(PATH_IPS)
+            parseCSVFile(PATH_IPA),
+            parseCSVFile(PATH_IPS)
         ]);
 
-        // Tambahkan label kelas
         allData = [];
         ipaData.forEach(s => allData.push({ ...s, kelas: "IPA" }));
         ipsData.forEach(s => allData.push({ ...s, kelas: "IPS" }));
 
-        // Sembunyikan loading, tampilkan konten
+        // Sembunyikan loading, tampilan konten
         document.getElementById("loader").classList.add("hide");
         document.getElementById("mainContent").style.display = "";
 
-        // Tampilkan info waktu update (berdasarkan waktu saat ini karena file statis)
+        // Info waktu
         const now = new Date();
         const jam = String(now.getHours()).padStart(2, "0");
         const menit = String(now.getMinutes()).padStart(2, "0");
         const tgl = now.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
-        document.getElementById("lastUpdate").textContent = "Data dari Excel \u00b7 " + tgl + " " + jam + ":" + menit;
+        document.getElementById("lastUpdate").textContent =
+            ipaData.length + " siswa IPA, " + ipsData.length + " siswa IPS \u00b7 " + tgl + " " + jam + ":" + menit;
 
         render();
 
     } catch (err) {
-        console.error(err);
+        console.error("Gagal memuat data:", err);
         document.getElementById("loader").classList.add("hide");
-        document.getElementById("errorMsg").textContent = err.message || "Terjadi kesalahan saat memuat data.";
+        document.getElementById("errorMsg").textContent =
+            "Pastikan file ipa.csv dan ips.csv sudah ada di folder yang sama dengan index.html di repository GitHub.";
+        document.getElementById("errDetail").textContent = err.message;
         document.getElementById("errorScreen").classList.add("show");
     }
 }
@@ -607,4 +609,4 @@ initPtcls();
 loadData();
 </script>
 </body>
-</html>  
+</html>
