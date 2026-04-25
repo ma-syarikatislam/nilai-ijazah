@@ -367,7 +367,7 @@ function renderNilaiGroup(nilai, kelas){
 
 function render(){
     var data=allData.slice();
-    if(filterAktif!=="semua") data=data.filter(function(s){return s.kelas===filterAktif});
+    if(filterAktif!=="semua") data=data.filter(function(s){return s.kelas.toLowerCase()===filterAktif});
     if(searchQuery.trim()){
         var q=searchQuery.toLowerCase();
         data=data.filter(function(s){return s.nama.toLowerCase().indexOf(q)!==-1});
@@ -491,8 +491,8 @@ async function loadData(){
         var ipaData=results[0];
         var ipsData=results[1];
         allData=[];
-        for(var i=0;i<ipaData.length;i++) allData.push({nama:ipaData[i].nama,nilai:ipaData[i].nilai,kelas:"ipa"});
-        for(var i=0;i<ipsData.length;i++) allData.push({nama:ipsData[i].nama,nilai:ipsData[i].nilai,kelas:"ips"});
+        for(var i=0;i<ipaData.length;i++) allData.push({nama:ipaData[i].nama,nilai:ipaData[i].nilai,kelas:"IPA"});
+        for(var i=0;i<ipsData.length;i++) allData.push({nama:ipsData[i].nama,nilai:ipsData[i].nilai,kelas:"IPS"});
         document.getElementById("loader").classList.add("hide");
         document.getElementById("mainContent").style.display="";
         var now=new Date();
