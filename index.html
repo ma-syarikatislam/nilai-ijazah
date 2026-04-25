@@ -367,7 +367,7 @@ function renderNilaiGroup(nilai, kelas){
 
 function render(){
     var data=allData.slice();
-    if(filterAktif!=="semua") data=data.filter(function(s){return s.kelas===filterAktif});
+    if(filterAktif!=="semua")  data=data.filter(function(s){return s.kelas.toLowerCase() === filterAktif.toLowerCase();
     if(searchQuery.trim()){
         var q=searchQuery.toLowerCase();
         data=data.filter(function(s){return s.nama.toLowerCase().indexOf(q)!==-1});
