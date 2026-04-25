@@ -4,207 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nilai Ijazah 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:w-weight@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
-        :root {
-            --bg: #0c0e14;
-            --bg-card: #161923;
-            --bg-card-alt: #1e2230;
-            --fg: #f0ece4;
-            --fg-muted: #7a7e8e;
-            --accent: #d4a843;
-            --accent-glow: rgba(212,168,67,0.12);
-            --accent-soft: #f5e6c0;
-            --border: rgba(212,168,67,0.1);
-            --success: #4ade80;
-            --danger: #f87171;
-            --ipa-grad: linear-gradient(135deg,#d4a843,#b8860b);
-            --ips-grad: linear-gradient(135deg,#43a8d4,#1a6fa0);
-            --radius: 14px;
-            --radius-sm: 10px;
-        }
-        *{margin:0;padding:0;box-sizing:border-box;}
-        body{
-            font-family:'DM Sans',sans-serif;
-            background:var(--bg);
-            color:var(--fg);
-            min-height:100vh;
-            overflow-x:hidden;
-            -webkit-font-smoothing:antialiased;
-        }
-
-        .atmos{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-        .atmos .orb{position:absolute;border-radius:50%;filter:blur(90px);animation:orbF 14s ease-in-out infinite;}
-        .orb-1{width:260px;height:260px;background:rgba(212,168,67,0.07);top:-80px;right:-90px;}
-        .orb-2{width:200px;height:200px;background:rgba(67,168,212,0.05);bottom:15%;left:-70px;animation-delay:-5s;}
-        .orb-3{width:140px;height:140px;background:rgba(212,168,67,0.04);bottom:-30px;right:25%;animation-delay:-9s;}
-        @keyframes orbF{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-25px) scale(1.08);}}
-
-        .particles{position:fixed;inset:0;pointer-events:none;z-index:0;}
-        .ptcl{position:absolute;width:2px;height:2px;background:var(--accent);border-radius:50%;opacity:0;animation:ptclUp 9s linear infinite;}
-        @keyframes ptclUp{0%{opacity:0;transform:translateY(100vh) scale(0);}10%{opacity:.5;}85%{opacity:.2;}100%{opacity:0;transform:translateY(-8vh) scale(1);}}
-
-        .wrap{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:0 18px 40px;}
-
-        .loader-screen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s,visibility .5s;}
-        .loader-screen.hide{opacity:0;visibility:hidden;}
-        .loader-ring{width:52px;height:52px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;}
-        @keyframes spin{to{transform:rotate(360deg);}}
-        .loader-text{font-size:13px;color:var(--fg-muted);letter-spacing:.5px;}
-        .loader-sub{font-size:11px;color:var(--fg-muted);opacity:.6;max-width:260px;text-align:center;line-height:1.5;}
-
-        .error-screen{position:fixed;inset:0;z-index:998;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px;text-align:center;}
-        .error-screen.show{display:flex;}
-        .error-screen i{font-size:44px;color:var(--danger);opacity:.6;}
-        .error-screen h2{font-size:18px;color:var(--fg);font-weight:600;}
-        .error-screen p{font-size:13px;color:var(--fg-muted);line-height:1.6;max-width:320px;}
-        .error-screen .err-detail{font-size:11px;color:var(--fg-muted);opacity:.5;max-width:340px;word-break:break-all;text-align:center;}
-        .error-screen .retry-btn{
-            margin-top:8px;padding:10px 28px;background:var(--ipa-grad);border:none;border-radius:var(--radius-sm);
-            color:#0c0e14;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;
-            transition:transform .2s,box-shadow .2s;
-        }
-        .error-screen .retry-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,168,67,.3);}
-
-        .hdr{text-align:center;padding:28px 0 20px;animation:fadeUp .6s ease-out both;}
-        .logo-wrap{position:relative;display:inline-block;margin-bottom:16px;}
-        .logo-ring{
-            width:90px;height:90px;border-radius:50%;background:var(--ipa-grad);padding:3px;
-            animation:logoP 3s ease-in-out infinite;position:relative;
-        }
-        .logo-ring::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(212,168,67,.18);animation:rRot 22s linear infinite;}
-        .logo-ring::after{content:'';position:absolute;inset:-13px;border-radius:50%;border:1px dashed rgba(212,168,67,.08);animation:rRot 34s linear infinite reverse;}
-        @keyframes rRot{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
-        @keyframes logoP{0%,100%{box-shadow:0 0 18px rgba(212,168,67,.18);}50%{box-shadow:0 0 36px rgba(212,168,67,.32);}}
-        .logo-in{width:100%;height:100%;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px;}
-        .logo-in i{font-size:28px;color:var(--accent);}
-        .logo-in span{font-size:6.5px;font-weight:700;color:var(--accent);letter-spacing:1.2px;text-transform:uppercase;}
-        .sch-name{font-size:11px;font-weight:500;color:var(--fg-muted);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px;}
-        .hdr-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;line-height:1.1;margin-bottom:4px;}
-        .hdr-title .hl{background:var(--ipa-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-        .hdr-sub{font-size:12px;color:var(--fg-muted);font-weight:400;}
-        .hdr-line{width:46px;height:2px;background:var(--ipa-grad);margin:16px auto 0;border-radius:2px;}
-
-        .update-info{
-            display:flex;align-items:center;justify-content:center;gap:6px;
-            font-size:10px;color:var(--fg-muted);opacity:.5;margin-top:10px;
-        }
-        .update-info .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:blink 2s ease-in-out infinite;}
-        @keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
-
-        .search-sec{margin-bottom:18px;animation:fadeUp .6s ease-out .15s both;}
-        .search-box{position:relative;}
-        .search-box input{
-            width:100%;padding:13px 14px 13px 42px;background:var(--bg-card);border:1px solid var(--border);
-            border-radius:var(--radius);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:all .3s;
-        }
-        .search-box input::placeholder{color:var(--fg-muted);}
-        .search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow);}
-        .search-box .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--fg-muted);font-size:13px;transition:color .3s;}
-        .search-box input:focus~.ico{color:var(--accent);}
-
-        .tabs{display:flex;gap:7px;margin-bottom:16px;animation:fadeUp .6s ease-out .25s both;}
-        .tab{
-            flex:1;padding:11px 6px;border:1px solid var(--border);border-radius:var(--radius-sm);
-            background:var(--bg-card);color:var(--fg-muted);font-family:'DM Sans',sans-serif;font-size:12px;
-            font-weight:600;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:5px;
-        }
-        .tab.on-gold{background:var(--ipa-grad);border-color:transparent;color:#0c0e14;box-shadow:0 4px 18px rgba(212,168,67,.28);}
-        .tab.on-blue{background:var(--ips-grad);border-color:transparent;color:#0c0e14;box-shadow:0 4px 18px rgba(67,168,212,.28);}
-        .tab:not(.on-gold):not(.on-blue):hover{border-color:rgba(212,168,67,.25);color:var(--fg);}
-        .tab i{font-size:11px;}
-
-        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px;animation:fadeUp .6s ease-out .3s both;}
-        .st{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px;text-align:center;}
-        .st-v{font-size:18px;font-weight:700;margin-bottom:1px;}
-        .st-v.g{color:var(--accent);}.st-v.gr{color:var(--success);}.st-v.b{color:#43a8d4;}
-        .st-l{font-size:9px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.5px;}
-
-        .sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;animation:fadeUp .6s ease-out .33s both;}
-        .sort-label{font-size:11px;color:var(--fg-muted);}
-        .sort-label strong{color:var(--fg);font-weight:600;}
-        .sort-btn{
-            font-size:11px;color:var(--fg-muted);background:var(--bg-card);border:1px solid var(--border);
-            padding:6px 10px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;
-            display:flex;align-items:center;gap:4px;transition:all .2s;
-        }
-        .sort-btn:hover{color:var(--accent);border-color:rgba(212,168,67,.3);}
-
-        .slist{display:flex;flex-direction:column;gap:10px;}
-        .scard{
-            background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
-            overflow:hidden;transition:all .35s;animation:fadeUp .45s ease-out both;
-        }
-        .scard:hover{box-shadow:0 6px 24px rgba(0,0,0,.25);}
-        .sc-hdr{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;cursor:pointer;user-select:none;}
-        .sc-avatar{
-            width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-            font-weight:700;font-size:13px;flex-shrink:0;
-        }
-        .sc-avatar.ipa{background:var(--ipa-grad);color:#0c0e14;}
-        .sc-avatar.ips{background:var(--ips-grad);color:#0c0e14;}
-        .sc-info{flex:1;min-width:0;}
-        .sc-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-        .sc-no{font-size:10px;color:var(--fg-muted);margin-top:1px;}
-        .sc-badge{padding:3px 9px;border-radius:16px;font-size:10px;font-weight:600;flex-shrink:0;}
-        .b-ipa{background:rgba(212,168,67,.1);color:var(--accent);}
-        .b-ips{background:rgba(67,168,212,.1);color:#43a8d4;}
-        .sc-tog{color:var(--fg-muted);font-size:11px;transition:transform .3s;flex-shrink:0;}
-        .sc-tog.open{transform:rotate(180deg);}
-
-        .sc-det{max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s;}
-        .sc-det.open{max-height:2000px;}
-        .sc-det-in{padding:0 14px 14px;}
-        .det-div{height:1px;background:var(--border);margin-bottom:12px;}
-
-        .subj-group-title{
-            font-size:9px;font-weight:700;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px;
-            margin-bottom:6px;margin-top:10px;padding-left:2px;
-        }
-        .subj-group-title:first-of-type{margin-top:0;}
-        .ngr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;}
-        .ni{background:var(--bg-card-alt);border-radius:8px;padding:9px 7px;display:flex;flex-direction:column;gap:3px;transition:background .2s;}
-        .ni:hover{background:rgba(212,168,67,.05);}
-        .ni-mk{font-size:8.5px;color:var(--fg-muted);line-height:1.2;min-height:17px;display:flex;align-items:center;}
-        .ni-val{font-size:17px;font-weight:700;line-height:1;}
-        .ni-val.h{color:var(--success);}.ni-val.m{color:var(--accent);}.ni-val.l{color:var(--danger);}
-        .ni-bar{width:100%;height:2px;background:rgba(255,255,255,.04);border-radius:2px;margin-top:3px;overflow:hidden;}
-        .ni-bar-f{height:100%;border-radius:2px;transition:width .7s ease-out .15s;width:0;}
-        .ni-bar-f.h{background:var(--success);}.ni-bar-f.m{background:var(--accent);}.ni-bar-f.l{background:var(--danger);}
-
-        .tot{
-            margin-top:12px;background:var(--bg-card-alt);border-radius:var(--radius-sm);
-            padding:12px 14px;display:flex;align-items:center;justify-content:space-between;
-        }
-        .tot-lbl{font-size:11px;font-weight:600;color:var(--fg-muted);}
-        .tot-val{font-size:19px;font-weight:900;font-family:'Playfair Display',serif;color:var(--accent-soft);}
-        .tot-prd{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:7px;}
-        .p-a{background:rgba(74,222,128,.12);color:var(--success);}
-        .p-b{background:rgba(212,168,67,.12);color:var(--accent);}
-        .p-c{background:rgba(248,113,113,.12);color:var(--danger);}
-
-        .empty{text-align:center;padding:44px 20px;animation:fadeUp .4s ease-out both;}
-        .empty i{font-size:36px;color:var(--fg-muted);opacity:.25;margin-bottom:12px;}
-        .empty p{font-size:13px;color:var(--fg-muted);}
-
-        .ftr{text-align:center;padding:28px 0 14px;font-size:10px;color:var(--fg-muted);opacity:.4;}
-
-        .toast{
-            position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(90px);
-            background:var(--bg-card-alt);border:1px solid var(--border);color:var(--fg);
-            padding:10px 18px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;
-            z-index:100;transition:transform .35s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5);
-        }
-        .toast.show{transform:translateX(-50%) translateY(0);}
-
-        ::-webkit-scrollbar{width:2px;}
-        ::-webkit-scrollbar-track{background:transparent;}
-        ::-webkit-scrollbar-thumb{background:rgba(212,168,67,.15);border-radius:2px;}
-
-        @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+        :root{--bg:#0c0e14;--bg-card:#161923;--bg-card-alt:#1e2230;--fg:#f0ece4;--fg-muted:#7a7e8e;--accent:#d4a843;--accent-glow:rgba(212,168,67,.12);--accent-soft:#f5e6c0;--border:rgba(212,168,67,.1);--success:#4ade80;--danger:#f87171;--ipa-grad:linear-gradient(135deg,#d4a843,#b8860b);--ips-grad:linear-gradient(135deg,#43a8d4,#1a6fa0);--radius:14px;--radius-sm:10px}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--fg);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+        .atmos{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+        .atmos .orb{position:absolute;border-radius:50%;filter:blur(90px);animation:orbF 14s ease-in-out infinite}
+        .orb-1{width:260px;height:260px;background:rgba(212,168,67,.07);top:-80px;right:-90px}
+        .orb-2{width:200px;height:200px;background:rgba(67,168,212,.05);bottom:15%;left:-70px;animation-delay:-5s}
+        .orb-3{width:140px;height:140px;background:rgba(212,168,67,.04);bottom:-30px;right:25%;animation-delay:-9s}
+        @keyframes orbF{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.08)}}
+        .particles{position:fixed;inset:0;pointer-events:none;z-index:0}
+        .ptcl{position:absolute;width:2px;height:2px;background:var(--accent);border-radius:50%;opacity:0;animation:ptclUp 9s linear infinite}
+        @keyframes ptclUp{0%{opacity:0;transform:translateY(100vh) scale(0)}10%{opacity:.5}85%{opacity:.2}100%{opacity:0;transform:translateY(-8vh) scale(1)}}
+        .wrap{position:relative;z-index:1;max-width:480px;margin:0 auto;padding:0 18px 40px}
+        .loader-screen{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s,visibility .5s}
+        .loader-screen.hide{opacity:0;visibility:hidden}
+        .loader-ring{width:52px;height:52px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .loader-text{font-size:13px;color:var(--fg-muted);letter-spacing:.5px}
+        .loader-sub{font-size:11px;color:var(--fg-muted);opacity:.6;max-width:260px;text-align:center;line-height:1.5}
+        .error-screen{position:fixed;inset:0;z-index:998;background:var(--bg);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px;text-align:center}
+        .error-screen.show{display:flex}
+        .error-screen i{font-size:44px;color:var(--danger);opacity:.6}
+        .error-screen h2{font-size:18px;color:var(--fg);font-weight:600}
+        .error-screen p{font-size:13px;color:var(--fg-muted);line-height:1.6;max-width:320px}
+        .error-screen .err-detail{font-size:11px;color:var(--fg-muted);opacity:.5;max-width:340px;word-break:break-all;text-align:center}
+        .error-screen .retry-btn{margin-top:8px;padding:10px 28px;background:var(--ipa-grad);border:none;border-radius:var(--radius-sm);color:#0c0e14;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;transition:transform .2s,box-shadow .2s}
+        .error-screen .retry-btn:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(212,168,67,.3)}
+        .hdr{text-align:center;padding:28px 0 20px;animation:fadeUp .6s ease-out both}
+        .logo-wrap{position:relative;display:inline-block;margin-bottom:16px}
+        .logo-ring{width:90px;height:90px;border-radius:50%;background:var(--ipa-grad);padding:3px;animation:logoP 3s ease-in-out infinite;position:relative}
+        .logo-ring::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:1px solid rgba(212,168,67,.18);animation:rRot 22s linear infinite}
+        .logo-ring::after{content:'';position:absolute;inset:-13px;border-radius:50%;border:1px dashed rgba(212,168,67,.08);animation:rRot 34s linear infinite reverse}
+        @keyframes rRot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        @keyframes logoP{0%,100%{box-shadow:0 0 18px rgba(212,168,67,.18)}50%{box-shadow:0 0 36px rgba(212,168,67,.32)}}
+        .logo-in{width:100%;height:100%;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1px}
+        .logo-in i{font-size:28px;color:var(--accent)}
+        .logo-in span{font-size:6.5px;font-weight:700;color:var(--accent);letter-spacing:1.2px;text-transform:uppercase}
+        .sch-name{font-size:11px;font-weight:500;color:var(--fg-muted);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:12px}
+        .hdr-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;line-height:1.1;margin-bottom:4px}
+        .hdr-title .hl{background:var(--ipa-grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hdr-sub{font-size:12px;color:var(--fg-muted);font-weight:400}
+        .hdr-line{width:46px;height:2px;background:var(--ipa-grad);margin:16px auto 0;border-radius:2px}
+        .update-info{display:flex;align-items:center;justify-content:center;gap:6px;font-size:10px;color:var(--fg-muted);opacity:.5;margin-top:10px}
+        .update-info .dot{width:5px;height:5px;border-radius:50%;background:var(--success);animation:blink 2s ease-in-out infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+        .search-sec{margin-bottom:18px;animation:fadeUp .6s ease-out .15s both}
+        .search-box{position:relative}
+        .search-box input{width:100%;padding:13px 14px 13px 42px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);color:var(--fg);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:all .3s}
+        .search-box input::placeholder{color:var(--fg-muted)}
+        .search-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
+        .search-box .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--fg-muted);font-size:13px;transition:color .3s}
+        .search-box input:focus~.ico{color:var(--accent)}
+        .tabs{display:flex;gap:7px;margin-bottom:16px;animation:fadeUp .6s ease-out .25s both}
+        .tab{flex:1;padding:11px 6px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--fg-muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;gap:5px}
+        .tab.on-gold{background:var(--ipa-grad);border-color:transparent;color:#0c0e14;box-shadow:0 4px 18px rgba(212,168,67,.28)}
+        .tab.on-blue{background:var(--ips-grad);border-color:transparent;color:#0c0e14;box-shadow:0 4px 18px rgba(67,168,212,.28)}
+        .tab:not(.on-gold):not(.on-blue):hover{border-color:rgba(212,168,67,.25);color:var(--fg)}
+        .tab i{font-size:11px}
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:16px;animation:fadeUp .6s ease-out .3s both}
+        .st{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px 8px;text-align:center}
+        .st-v{font-size:18px;font-weight:700;margin-bottom:1px}
+        .st-v.g{color:var(--accent)}.st-v.gr{color:var(--success)}.st-v.b{color:#43a8d4}
+        .st-l{font-size:9px;color:var(--fg-muted);text-transform:uppercase;letter-spacing:.5px}
+        .sort-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;animation:fadeUp .6s ease-out .33s both}
+        .sort-label{font-size:11px;color:var(--fg-muted)}
+        .sort-label strong{color:var(--fg);font-weight:600}
+        .sort-btn{font-size:11px;color:var(--fg-muted);background:var(--bg-card);border:1px solid var(--border);padding:6px 10px;border-radius:8px;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:4px;transition:all .2s}
+        .sort-btn:hover{color:var(--accent);border-color:rgba(212,168,67,.3)}
+        .slist{display:flex;flex-direction:column;gap:10px}
+        .scard{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .35s;animation:fadeUp .45s ease-out both}
+        .scard:hover{box-shadow:0 6px 24px rgba(0,0,0,.25)}
+        .sc-hdr{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;cursor:pointer;user-select:none}
+        .sc-avatar{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
+        .sc-avatar.ipa{background:var(--ipa-grad);color:#0c0e14}
+        .sc-avatar.ips{background:var(--ips-grad);color:#0c0e14}
+        .sc-info{flex:1;min-width:0}
+        .sc-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+        .sc-no{font-size:10px;color:var(--fg-muted);margin-top:1px}
+        .sc-badge{padding:3px 9px;border-radius:16px;font-size:10px;font-weight:600;flex-shrink:0}
+        .b-ipa{background:rgba(212,168,67,.1);color:var(--accent)}
+        .b-ips{background:rgba(67,168,212,.1);color:#43a8d4}
+        .sc-tog{color:var(--fg-muted);font-size:11px;transition:transform .3s;flex-shrink:0}
+        .sc-tog.open{transform:rotate(180deg)}
+        .sc-det{max-height:0;overflow:hidden;transition:max-height .45s ease,padding .3s}
+        .sc-det.open{max-height:2000px}
+        .sc-det-in{padding:0 14px 14px}
+        .det-div{height:1px;background:var(--border);margin-bottom:12px}
+        .subj-group-title{font-size:9px;font-weight:700;color:var(--fg-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;margin-top:10px;padding-left:2px}
+        .subj-group-title:first-of-type{margin-top:0}
+        .ngr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
+        .ni{background:var(--bg-card-alt);border-radius:8px;padding:9px 7px;display:flex;flex-direction:column;gap:3px;transition:background .2s}
+        .ni:hover{background:rgba(212,168,67,.05)}
+        .ni-mk{font-size:8.5px;color:var(--fg-muted);line-height:1.2;min-height:17px;display:flex;align-items:center}
+        .ni-val{font-size:17px;font-weight:700;line-height:1}
+        .ni-val.h{color:var(--success)}.ni-val.m{color:var(--accent)}.ni-val.l{color:var(--danger)}
+        .ni-bar{width:100%;height:2px;background:rgba(255,255,255,.04);border-radius:2px;margin-top:3px;overflow:hidden}
+        .ni-bar-f{height:100%;border-radius:2px;transition:width .7s ease-out .15s;width:0}
+        .ni-bar-f.h{background:var(--success)}.ni-bar-f.m{background:var(--accent)}.ni-bar-f.l{background:var(--danger)}
+        .tot{margin-top:12px;background:var(--bg-card-alt);border-radius:var(--radius-sm);padding:12px 14px;display:flex;align-items:center;justify-content:space-between}
+        .tot-lbl{font-size:11px;font-weight:600;color:var(--fg-muted)}
+        .tot-val{font-size:19px;font-weight:900;font-family:'Playfair Display',serif;color:var(--accent-soft)}
+        .tot-prd{font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:7px}
+        .p-a{background:rgba(74,222,128,.12);color:var(--success)}
+        .p-b{background:rgba(212,168,67,.12);color:var(--accent)}
+        .p-c{background:rgba(248,113,113,.12);color:var(--danger)}
+        .empty{text-align:center;padding:44px 20px;animation:fadeUp .4s ease-out both}
+        .empty i{font-size:36px;color:var(--fg-muted);opacity:.25;margin-bottom:12px}
+        .empty p{font-size:13px;color:var(--fg-muted)}
+        .ftr{text-align:center;padding:28px 0 14px;font-size:10px;color:var(--fg-muted);opacity:.4}
+        .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(90px);background:var(--bg-card-alt);border:1px solid var(--border);color:var(--fg);padding:10px 18px;border-radius:var(--radius-sm);font-size:12px;font-weight:500;z-index:100;transition:transform .35s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        ::-webkit-scrollbar{width:2px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:rgba(212,168,67,.15);border-radius:2px}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
     </style>
 </head>
 <body>
@@ -274,337 +191,369 @@
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================
-   KONFIGURASI PATH FILE CSV
+/* =============================================
+   PATH FILE CSV
    Pastikan file ini ada di root repo GitHub
-   ============================================ */
-const PATH_IPA = "./ipa.csv";
-const PATH_IPS = "./ips.csv";
+   ============================================= */
+var PATH_IPA = "./ipa.csv";
+var PATH_IPS = "./ips.csv";
 
-// === Nama mapel singkat ===
-const MAP_SHORT = {
-    "Al-Qur'an Hadis": "Al-Qur'an Hadis",
-    "Akidah Akhlak": "Akidah Akhlak",
-    "Fikih": "Fikih",
-    "Sejarah Kebudayaan Islam": "SKI",
-    "Pendidikan Pancasila dan Kewarganegaraan": "PPKn",
-    "Bahasa Indonesia": "B. Indonesia",
-    "Bahasa Arab": "B. Arab",
-    "Matematika": "Matematika",
-    "Sejarah Indonesia": "Sej. Indonesia",
-    "Bahasa Inggris": "B. Inggris",
-    "Seni Budaya": "Seni Budaya",
-    "Pendidikan Jasmani, Olahraga, dan Kesehatan": "PJOK",
-    "Prakarya dan Kewirausahaan": "Prakarya",
-    "Bahasa dan Sastra Sunda": "B. Sunda",
-    "Sejarah Perjuangan Syarikat Islam": "Sej. Syarikat Islam",
-    "Matematika (P)": "Mat. (P)",
-    "Biologi": "Biologi",
-    "Fisika": "Fisika",
-    "Kimia": "Kimia",
-    "Bahasa Jepang": "B. Jepang",
-    "Ekonomi (LM)": "Ekonomi (LM)",
-    "Geografi": "Geografi",
-    "Sejarah": "Sejarah",
-    "Sosiologi": "Sosiologi",
-    "Ekonomi": "Ekonomi",
-    "Biologi (LM)": "Biologi (LM)"
+/* === Nama mapel singkat untuk tampilan === */
+var MAP_SHORT = {
+    "Al-Qur'an Hadis":"Al-Qur'an Hadis",
+    "Akidah Akhlak":"Akidah Akhlak",
+    "Fikih":"Fikih",
+    "Sejarah Kebudayaan Islam":"SKI",
+    "Pendidikan Pancasila dan Kewarganegaraan":"PPKn",
+    "Bahasa Indonesia":"B. Indonesia",
+    "Bahasa Arab":"B. Arab",
+    "Matematika":"Matematika",
+    "Sejarah Indonesia":"Sej. Indonesia",
+    "Bahasa Inggris":"B. Inggris",
+    "Seni Budaya":"Seni Budaya",
+    "Pendidikan Jasmani, Olahraga, dan Kesehatan":"PJOK",
+    "Prakarya dan Kewirausahaan":"Prakarya",
+    "Bahasa dan Sastra Sunda":"B. Sunda",
+    "Sejarah Perjuangan Syarikat Islam":"Sej. Syarikat Islam",
+    "Matematika (P)":"Mat. (P)",
+    "Biologi":"Biologi",
+    "Fisika":"Fisika",
+    "Kimia":"Kimia",
+    "Bahasa Jepang":"B. Jepang",
+    "Ekonomi (LM)":"Ekonomi (LM)",
+    "Geografi":"Geografi",
+    "Sejarah":"Sejarah",
+    "Sosiologi":"Sosiologi",
+    "Ekonomi":"Ekonomi",
+    "Biologi (LM)":"Biologi (LM)"
 };
 
-// === Kelompok mapel per kelas ===
-const KEAGAMAAN = ["Al-Qur'an Hadis","Akidah Akhlak","Fikih","Sejarah Kebudayaan Islam"];
-const UMUM = ["Pendidikan Pancasila dan Kewarganegaraan","Bahasa Indonesia","Bahasa Arab","Matematika","Sejarah Indonesia","Bahasa Inggris"];
-const KETERAMPILAN = ["Seni Budaya","Pendidikan Jasmani, Olahraga, dan Kesehatan","Prakarya dan Kewirausahaan","Bahasa dan Sastra Sunda","Sejarah Perjuangan Syarikat Islam"];
-const PEMINATAN_IPA = ["Matematika (P)","Biologi","Fisika","Kimia","Bahasa Jepang","Ekonomi (LM)"];
-const PEMINATAN_IPS = ["Geografi","Sejarah","Sosiologi","Ekonomi","Bahasa Jepang","Biologi (LM)"];
+/* === Kelompok mapel === */
+var KEAGAMAAN = ["Al-Qur'an Hadis","Akidah Akhlak","Fikih","Sejarah Kebudayaan Islam"];
+var UMUM = ["Pendidikan Pancasila dan Kewarganegaraan","Bahasa Indonesia","Bahasa Arab","Matematika","Sejarah Indonesia","Bahasa Inggris"];
+var KETERAMPILAN = ["Seni Budaya","Pendidikan Jasmani, Olahraga, dan Kesehatan","Prakarya dan Kewirausahaan","Bahasa dan Sastra Sunda","Sejarah Perjuangan Syarikat Islam"];
+var PEMINATAN_IPA = ["Matematika (P)","Biologi","Fisika","Kimia","Bahasa Jepang","Ekonomi (LM)"];
+var PEMINATAN_IPS = ["Geografi","Sejarah","Sosiologi","Ekonomi","Bahasa Jepang","Biologi (LM)"];
 
-// === State ===
-let allData = [];
-let filterAktif = "semua";
-let searchQuery = "";
-let sortDesc = true;
+/* === State === */
+var allData = [];
+var filterAktif = "semua";
+var searchQuery = "";
+var sortDesc = true;
 
-// === Utilitas ===
-function rataRata(nilai) {
-    const v = Object.values(nilai);
-    return v.length > 0 ? v.reduce((a, b) => a + b, 0) / v.length : 0;
+/* === Utilitas === */
+function rataRata(nilai){
+    var v=Object.values(nilai);
+    return v.length>0?v.reduce(function(a,b){return a+b},0)/v.length:0;
 }
-function katNilai(n) { return n >= 85 ? "h" : n >= 70 ? "m" : "l"; }
-function predikatInfo(r) {
-    if (r >= 88) return { label: "Sangat Baik", cls: "p-a" };
-    if (r >= 75) return { label: "Baik", cls: "p-b" };
-    return { label: "Cukup", cls: "p-c" };
+function katNilai(n){return n>=85?"h":n>=70?"m":"l";}
+function predikatInfo(r){
+    if(r>=88)return{label:"Sangat Baik",cls:"p-a"};
+    if(r>=75)return{label:"Baik",cls:"p-b"};
+    return{label:"Cukup",cls:"p-c"};
 }
-function inisial(nama) { return nama.split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase(); }
+function inisial(nama){return nama.split(" ").slice(0,2).map(function(w){return w[0]}).join("").toUpperCase();}
 
-// === Baca file CSV dengan SheetJS ===
-function parseCSVFile(path) {
+/* =============================================
+   BACA CSV — MENANGANI DELIMITER TITIK KOMA (;)
+   Excel Indonesia memakai ; bukan , sebagai pemisah
+   ============================================= */
+function parseCSVFile(path){
     return fetch(path)
-        .then(res => {
-            if (!res.ok) throw new Error("File " + path + " tidak ditemukan (HTTP " + res.status + ")");
+        .then(function(res){
+            if(!res.ok) throw new Error("File "+path+" tidak ditemukan (HTTP "+res.status+")");
             return res.text();
         })
-        .then(text => {
-            // Gunakan SheetJS untuk parse CSV (menangani koma di dalam tanda kutip, dll)
-            const wb = XLSX.read(text, { type: "string" });
-            const ws = wb.Sheets[wb.SheetNames[0]];
-            const rows = XLSX.utils.sheet_to_json(ws, { header: 1, defval: "" });
+        .then(function(text){
+            // 1. Hapus BOM UTF-8 jika ada (Excel sering menambahkan ini)
+            var clean = text.replace(/^\uFEFF/,"");
 
-            if (rows.length < 2) throw new Error("File " + path + " tidak memiliki data baris");
+            // 2. Deteksi delimiter secara otomatis
+            // Ambil baris pertama yang berisi header
+            var lines = clean.split(/\r?\n/);
+            var firstLine = lines[0] || "";
 
-            // Baris pertama = header, kolom 0 = HEAD, kolom 1 = Nama, kolom 2+ = mapel
-            const headers = rows[0];
-            const mapelNames = headers.slice(2);
+            // Hitung jumlah titik koma vs koma
+            var sc = (firstLine.match(/;/g)||[]).length;
+            var cm = (firstLine.match(/,/g)||[]).length;
 
-            const result = [];
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                if (!row || row.length < 2) continue;
-                const nama = String(row[1] || "").trim();
-                if (!nama) continue;
-
-                const nilai = {};
-                for (let j = 0; j < mapelNames.length; j++) {
-                    const mk = String(mapelNames[j]).trim();
-                    if (!mk) continue;
-                    const raw = row[j + 2];
-                    const val = parseFloat(raw);
-                    nilai[mk] = isNaN(val) ? 0 : val;
+            // Jika titik koma lebih banyak → delimiter = titik koma
+            // Jika koma lebih banyak → delimiter = koma
+            // Jika sama → coba lihat apakah baris kedua juga punya titik koma
+            var delimiter = ",";
+            if(sc > cm){
+                delimiter = ";";
+            } else if(sc === cm && sc > 0 && lines.length > 1){
+                var secondLine = lines[1] || "";
+                if((secondLine.match(/;/g)||[]).length > (secondLine.match(/,/g)||[]).length){
+                    delimiter = ";";
                 }
-                result.push({ nama, nilai });
             }
 
-            if (result.length === 0) throw new Error("File " + path + " tidak memiliki data siswa");
+            // 3. Parse dengan SheetJS menggunakan delimiter yang terdeteksi
+            var wb = XLSX.read(clean, {type:"string", FS:delimiter, raw:false});
+            var ws = wb.Sheets[wb.SheetNames[0]];
+            var rows = XLSX.utils.sheet_to_json(ws, {header:1, defval:""});
+
+            if(rows.length < 2) throw new Error("File "+path+" tidak memiliki data baris");
+
+            // 4. Baris pertama = header, kolom 0 = HEAD, kolom 1 = Nama, kolom 2+ = mapel
+            var headers = rows[0];
+            var mapelNames = headers.slice(2);
+
+            var result = [];
+            for(var i=1; i<rows.length; i++){
+                var row = rows[i];
+                if(!row || row.length < 2) continue;
+                var nama = String(row[1]||"").trim();
+                if(!nama) continue;
+
+                var nilai = {};
+                for(var j=0; j<mapelNames.length; j++){
+                    var mk = String(mapelNames[j]).trim();
+                    if(!mk) continue;
+                    var raw = row[j+2];
+                    var val = parseFloat(raw);
+                    nilai[mk] = isNaN(val) ? 0 : val;
+                }
+                result.push({nama:nama, nilai:nilai});
+            }
+
+            if(result.length === 0) throw new Error("File "+path+" tidak memiliki data siswa (delimiter: "+delimiter+")");
             return result;
         });
 }
 
-// === Bangun grup mapel dinamis ===
-function buildGroups(nilai, kelas) {
-    const peminatan = kelas === "IPA" ? PEMINATAN_IPA : PEMINATAN_IPS;
-    const groups = [
-        { label: "Keagamaan", keys: KEAGAMAAN },
-        { label: "Umum", keys: UMUM },
-        { label: "Keterampilan", keys: KETERAMPILAN },
-        { label: "Peminatan " + kelas, keys: peminatan }
+/* === Bangun grup mapel dinamis === */
+function buildGroups(nilai, kelas){
+    var peminatan = kelas==="IPA" ? PEMINATAN_IPA : PEMINATAN_IPS;
+    var groups=[
+        {label:"Keagamaan", keys:KEAGAMAAN},
+        {label:"Umum", keys:UMUM},
+        {label:"Keterampilan", keys:KETERAMPILAN},
+        {label:"Peminatan "+kelas, keys:peminatan}
     ];
-    return groups.map(g => ({
-        label: g.label,
-        keys: g.keys.filter(k => nilai[k] !== undefined)
-    })).filter(g => g.keys.length > 0);
+    return groups.map(function(g){
+        return{label:g.label, keys:g.keys.filter(function(k){return nilai[k]!==undefined})};
+    }).filter(function(g){return g.keys.length>0});
 }
 
-// === Partikel latar ===
-function initPtcls() {
-    const c = document.getElementById("ptcls");
-    for (let i = 0; i < 18; i++) {
-        const p = document.createElement("div");
-        p.className = "ptcl";
-        p.style.left = Math.random() * 100 + "%";
-        p.style.animationDelay = Math.random() * 9 + "s";
-        p.style.animationDuration = (7 + Math.random() * 5) + "s";
-        const sz = (1 + Math.random() * 1.5) + "px";
-        p.style.width = sz; p.style.height = sz;
+/* === Partikel === */
+function initPtcls(){
+    var c=document.getElementById("ptcls");
+    for(var i=0;i<18;i++){
+        var p=document.createElement("div");
+        p.className="ptcl";
+        p.style.left=Math.random()*100+"%";
+        p.style.animationDelay=Math.random()*9+"s";
+        p.style.animationDuration=(7+Math.random()*5)+"s";
+        var sz=(1+Math.random()*1.5)+"px";
+        p.style.width=sz;p.style.height=sz;
         c.appendChild(p);
     }
 }
 
-// === Render statistik ===
-function renderStats(data) {
-    const n = data.length;
-    const ipaC = data.filter(s => s.kelas === "IPA").length;
-    const ipsC = data.filter(s => s.kelas === "IPS").length;
-    let totalR = 0;
-    data.forEach(s => { totalR += rataRata(s.nilai); });
-    const avg = n > 0 ? (totalR / n).toFixed(1) : "0";
-    document.getElementById("statsRow").innerHTML =
-        '<div class="st"><div class="st-v g">' + n + '</div><div class="st-l">Total Siswa</div></div>' +
-        '<div class="st"><div class="st-v gr">' + avg + '</div><div class="st-l">Rata-rata</div></div>' +
-        '<div class="st"><div class="st-v b">' + ipaC + '/' + ipsC + '</div><div class="st-l">IPA / IPS</div></div>';
+/* === Render statistik === */
+function renderStats(data){
+    var n=data.length;
+    var ipaC=0,ipsC=0,totalR=0;
+    for(var i=0;i<data.length;i++){
+        if(data[i].kelas==="IPA")ipaC++;else ipsC++;
+        totalR+=rataRata(data[i].nilai);
+    }
+    var avg=n>0?(totalR/n).toFixed(1):"0";
+    document.getElementById("statsRow").innerHTML=
+        '<div class="st"><div class="st-v g">'+n+'</div><div class="st-l">Total Siswa</div></div>'+
+        '<div class="st"><div class="st-v gr">'+avg+'</div><div class="st-l">Rata-rata</div></div>'+
+        '<div class="st"><div class="st-v b">'+ipaC+'/'+ipsC+'</div><div class="st-l">IPA / IPS</div></div>';
 }
 
-// === Render grup nilai ===
-function renderNilaiGroup(nilai, kelas) {
-    const groups = buildGroups(nilai, kelas);
-    let html = "";
-    groups.forEach(g => {
-        html += '<div class="subj-group-title">' + g.label + '</div><div class="ngr">';
-        g.keys.forEach(mk => {
-            const n = nilai[mk];
-            const c = katNilai(n);
-            html += '<div class="ni">' +
-                '<span class="ni-mk">' + (MAP_SHORT[mk] || mk) + '</span>' +
-                '<span class="ni-val ' + c + '">' + n + '</span>' +
-                '<div class="ni-bar"><div class="ni-bar-f ' + c + '" data-w="' + n + '"></div></div>' +
+/* === Render grup nilai === */
+function renderNilaiGroup(nilai, kelas){
+    var groups=buildGroups(nilai, kelas);
+    var html="";
+    groups.forEach(function(g){
+        html+='<div class="subj-group-title">'+g.label+'</div><div class="ngr">';
+        g.keys.forEach(function(mk){
+            var n=nilai[mk];
+            var c=katNilai(n);
+            var short=MAP_SHORT[mk]||mk;
+            html+='<div class="ni">'+
+                '<span class="ni-mk">'+short+'</span>'+
+                '<span class="ni-val '+c+'">'+n+'</span>'+
+                '<div class="ni-bar"><div class="ni-bar-f '+c+'" data-w="'+n+'"></div></div>'+
                 '</div>';
         });
-        html += '</div>';
+        html+='</div>';
     });
     return html;
 }
 
-// === Render daftar utama ===
-function render() {
-    let data = [...allData];
-    if (filterAktif !== "semua") data = data.filter(s => s.kelas === filterAktif);
-    if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        data = data.filter(s => s.nama.toLowerCase().includes(q));
+/* === Render daftar utama === */
+function render(){
+    var data=allData.slice();
+    if(filterAktif!=="semua") data=data.filter(function(s){return s.kelas===filterAktif});
+    if(searchQuery.trim()){
+        var q=searchQuery.toLowerCase();
+        data=data.filter(function(s){return s.nama.toLowerCase().indexOf(q)!==-1});
     }
-    data.sort((a, b) => {
-        const ra = rataRata(a.nilai), rb = rataRata(b.nilai);
-        return sortDesc ? rb - ra : ra - rb;
+    data.sort(function(a,b){
+        var ra=rataRata(a.nilai),rb=rataRata(b.nilai);
+        return sortDesc?rb-ra:ra-rb;
     });
 
-    document.getElementById("countLabel").textContent = data.length;
+    document.getElementById("countLabel").textContent=data.length;
     renderStats(data);
 
-    const list = document.getElementById("sList");
-    if (data.length === 0) {
-        list.innerHTML = '<div class="empty"><i class="fas fa-search"></i><p>Tidak ada siswa ditemukan</p></div>';
+    var list=document.getElementById("sList");
+    if(data.length===0){
+        list.innerHTML='<div class="empty"><i class="fas fa-search"></i><p>Tidak ada siswa ditemukan</p></div>';
         return;
     }
 
-    list.innerHTML = data.map((s, i) => {
-        const r = rataRata(s.nilai);
-        const rFix = r.toFixed(1);
-        const pr = predikatInfo(r);
-        const kls = s.kelas.toLowerCase();
-        return '<article class="scard" style="animation-delay:' + (i * 0.04) + 's">' +
-            '<div class="sc-hdr" onclick="toggle(this)" role="button" tabindex="0" aria-expanded="false">' +
-                '<div class="sc-avatar ' + kls + '">' + inisial(s.nama) + '</div>' +
-                '<div class="sc-info">' +
-                    '<div class="sc-name">' + s.nama + '</div>' +
-                    '<div class="sc-no">' + s.kelas + ' &middot; Rata-rata ' + rFix + '</div>' +
-                '</div>' +
-                '<span class="sc-badge b-' + kls + '">' + s.kelas + '</span>' +
-                '<span class="sc-tog"><i class="fas fa-chevron-down"></i></span>' +
-            '</div>' +
-            '<div class="sc-det">' +
-                '<div class="sc-det-in">' +
-                    '<div class="det-div"></div>' +
-                    renderNilaiGroup(s.nilai, s.kelas) +
-                    '<div class="tot">' +
-                        '<span class="tot-lbl">Rata-rata</span>' +
-                        '<div style="display:flex;align-items:center;">' +
-                            '<span class="tot-val">' + rFix + '</span>' +
-                            '<span class="tot-prd ' + pr.cls + '">' + pr.label + '</span>' +
-                        '</div>' +
-                    '</div>' +
-                '</div>' +
-            '</div>' +
+    var html="";
+    for(var i=0;i<data.length;i++){
+        var s=data[i];
+        var r=rataRata(s.nilai);
+        var rFix=r.toFixed(1);
+        var pr=predikatInfo(r);
+        var kls=s.kelas.toLowerCase();
+        html+='<article class="scard" style="animation-delay:'+(i*0.04)+'s">'+
+            '<div class="sc-hdr" onclick="toggle(this)" role="button" tabindex="0" aria-expanded="false">'+
+                '<div class="sc-avatar '+kls+'">'+inisial(s.nama)+'</div>'+
+                '<div class="sc-info">'+
+                    '<div class="sc-name">'+s.nama+'</div>'+
+                    '<div class="sc-no">'+s.kelas+' &middot; Rata-rata '+rFix+'</div>'+
+                '</div>'+
+                '<span class="sc-badge b-'+kls+'">'+s.kelas+'</span>'+
+                '<span class="sc-tog"><i class="fas fa-chevron-down"></i></span>'+
+            '</div>'+
+            '<div class="sc-det">'+
+                '<div class="sc-det-in">'+
+                    '<div class="det-div"></div>'+
+                    renderNilaiGroup(s.nilai, s.kelas)+
+                    '<div class="tot">'+
+                        '<span class="tot-lbl">Rata-rata</span>'+
+                        '<div style="display:flex;align-items:center;">'+
+                            '<span class="tot-val">'+rFix+'</span>'+
+                            '<span class="tot-prd '+pr.cls+'">'+pr.label+'</span>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
         '</article>';
-    }).join('');
+    }
+    list.innerHTML=html;
 }
 
-// === Toggle kartu ===
-function toggle(hdr) {
-    const card = hdr.closest(".scard");
-    const det = card.querySelector(".sc-det");
-    const tog = hdr.querySelector(".sc-tog");
-    const isOpen = det.classList.contains("open");
+/* === Toggle kartu === */
+function toggle(hdr){
+    var card=hdr.closest(".scard");
+    var det=card.querySelector(".sc-det");
+    var tog=hdr.querySelector(".sc-tog");
+    var isOpen=det.classList.contains("open");
 
-    // Tutup semua dulu
-    document.querySelectorAll(".sc-det.open").forEach(d => {
-        d.classList.remove("open");
-        d.closest(".scard").querySelector(".sc-tog").classList.remove("open");
-        d.closest(".scard").querySelector(".sc-hdr").setAttribute("aria-expanded", "false");
-    });
+    var allOpen=document.querySelectorAll(".sc-det.open");
+    for(var i=0;i<allOpen.length;i++){
+        allOpen[i].classList.remove("open");
+        allOpen[i].closest(".scard").querySelector(".sc-tog").classList.remove("open");
+        allOpen[i].closest(".scard").querySelector(".sc-hdr").setAttribute("aria-expanded","false");
+    }
 
-    if (!isOpen) {
+    if(!isOpen){
         det.classList.add("open");
         tog.classList.add("open");
-        hdr.setAttribute("aria-expanded", "true");
-        setTimeout(() => {
-            det.querySelectorAll(".ni-bar-f").forEach(b => { b.style.width = b.dataset.w + "%"; });
-        }, 60);
+        hdr.setAttribute("aria-expanded","true");
+        setTimeout(function(){
+            var bars=det.querySelectorAll(".ni-bar-f");
+            for(var j=0;j<bars.length;j++){
+                bars[j].style.width=bars[j].dataset.w+"%";
+            }
+        },60);
     }
 }
 
-// === Tab filter ===
-document.querySelectorAll(".tab").forEach(btn => {
-    btn.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach(b => {
-            b.classList.remove("on-gold", "on-blue");
-            b.setAttribute("aria-pressed", "false");
-        });
-        filterAktif = btn.dataset.f;
-        btn.classList.add(filterAktif === "ips" ? "on-blue" : "on-gold");
-        btn.setAttribute("aria-pressed", "true");
+/* === Tab filter === */
+var tabBtns=document.querySelectorAll(".tab");
+for(var t=0;t<tabBtns.length;t++){
+    tabBtns[t].addEventListener("click",function(){
+        var btns=document.querySelectorAll(".tab");
+        for(var j=0;j<btns.length;j++){
+            btns[j].classList.remove("on-gold","on-blue");
+            btns[j].setAttribute("aria-pressed","false");
+        }
+        filterAktif=this.dataset.f;
+        this.classList.add(filterAktif==="ips"?"on-blue":"on-gold");
+        this.setAttribute("aria-pressed","true");
         render();
-        showToast(filterAktif === "semua" ? "Menampilkan semua kelas" : "Filter: Kelas " + filterAktif.toUpperCase());
+        showToast(filterAktif==="semua"?"Menampilkan semua kelas":"Filter: Kelas "+filterAktif.toUpperCase());
     });
-});
+}
 
-// === Pencarian ===
-const srcIn = document.getElementById("srcIn");
-let srcTm;
-srcIn.addEventListener("input", () => {
+/* === Pencarian === */
+var srcIn=document.getElementById("srcIn");
+var srcTm;
+srcIn.addEventListener("input",function(){
     clearTimeout(srcTm);
-    srcTm = setTimeout(() => { searchQuery = srcIn.value; render(); }, 200);
+    var self=this;
+    srcTm=setTimeout(function(){searchQuery=self.value;render()},200);
 });
 
-// === Sort ===
-document.getElementById("sortBtn").addEventListener("click", () => {
-    sortDesc = !sortDesc;
-    document.querySelector("#sortBtn i").className = sortDesc ? "fas fa-arrow-down-short-wide" : "fas fa-arrow-up-short-wide";
+/* === Sort === */
+document.getElementById("sortBtn").addEventListener("click",function(){
+    sortDesc=!sortDesc;
+    document.querySelector("#sortBtn i").className=sortDesc?"fas fa-arrow-down-short-wide":"fas fa-arrow-up-short-wide";
     render();
-    showToast(sortDesc ? "Urutan: Tertinggi ke Terendah" : "Urutan: Terendah ke Tertinggi");
+    showToast(sortDesc?"Urutan: Tertinggi ke Terendah":"Urutan: Terendah ke Tertinggi");
 });
 
-// === Keyboard support ===
-document.addEventListener("keydown", e => {
-    if ((e.key === "Enter" || e.key === " ") && document.activeElement.classList.contains("sc-hdr")) {
-        e.preventDefault();
-        toggle(document.activeElement);
+/* === Keyboard === */
+document.addEventListener("keydown",function(e){
+    if((e.key==="Enter"||e.key===" ")&&document.activeElement.classList.contains("sc-hdr")){
+        e.preventDefault();toggle(document.activeElement);
     }
 });
 
-// === Toast ===
-function showToast(msg) {
-    const t = document.getElementById("toast");
-    t.textContent = msg;
-    t.classList.add("show");
-    setTimeout(() => t.classList.remove("show"), 1800);
+/* === Toast === */
+function showToast(msg){
+    var t=document.getElementById("toast");
+    t.textContent=msg;t.classList.add("show");
+    setTimeout(function(){t.classList.remove("show")},1800);
 }
 
-// === MUAT DATA DARI CSV ===
-async function loadData() {
-    try {
-        const [ipaData, ipsData] = await Promise.all([
-            parseCSVFile(PATH_IPA),
-            parseCSVFile(PATH_IPS)
-        ]);
+/* === MUAT DATA === */
+async function loadData(){
+    try{
+        var results=await Promise.all([parseCSVFile(PATH_IPA), parseCSVFile(PATH_IPS)]);
+        var ipaData=results[0];
+        var ipsData=results[1];
 
-        allData = [];
-        ipaData.forEach(s => allData.push({ ...s, kelas: "IPA" }));
-        ipsData.forEach(s => allData.push({ ...s, kelas: "IPS" }));
+        allData=[];
+        for(var i=0;i<ipaData.length;i++) allData.push({nama:ipaData[i].nama,nilai:ipaData[i].nilai,kelas:"IPA"});
+        for(var i=0;i<ipsData.length;i++) allData.push({nama:ipsData[i].nama,nilai:ipsData[i].nilai,kelas:"IPS"});
 
-        // Sembunyikan loading, tampilan konten
         document.getElementById("loader").classList.add("hide");
-        document.getElementById("mainContent").style.display = "";
+        document.getElementById("mainContent").style.display="";
 
-        // Info waktu
-        const now = new Date();
-        const jam = String(now.getHours()).padStart(2, "0");
-        const menit = String(now.getMinutes()).padStart(2, "0");
-        const tgl = now.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
-        document.getElementById("lastUpdate").textContent =
-            ipaData.length + " siswa IPA, " + ipsData.length + " siswa IPS \u00b7 " + tgl + " " + jam + ":" + menit;
+        var now=new Date();
+        var jam=String(now.getHours()).padStart(2,"0");
+        var menit=String(now.getMinutes()).padStart(2,"0");
+        var tgl=now.toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});
+        document.getElementById("lastUpdate").textContent=
+            ipaData.length+" siswa IPA, "+ipsData.length+" siswa IPS \u00b7 "+tgl+" "+jam+":"+menit;
 
         render();
-
-    } catch (err) {
-        console.error("Gagal memuat data:", err);
+    }catch(err){
+        console.error("Gagal memuat data:",err);
         document.getElementById("loader").classList.add("hide");
-        document.getElementById("errorMsg").textContent =
+        document.getElementById("errorMsg").textContent=
             "Pastikan file ipa.csv dan ips.csv sudah ada di folder yang sama dengan index.html di repository GitHub.";
-        document.getElementById("errDetail").textContent = err.message;
+        document.getElementById("errDetail").textContent=err.message;
         document.getElementById("errorScreen").classList.add("show");
     }
 }
 
-// === Init ===
+/* === Init === */
 initPtcls();
 loadData();
 </script>
